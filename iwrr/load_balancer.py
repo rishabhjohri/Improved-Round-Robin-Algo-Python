@@ -1,5 +1,7 @@
 # iwrr/load_balancer.py
 
+from metrics_tracker import MetricsTracker
+
 class LoadBalancer:
     def __init__(self, vms):
         self.vms = vms
@@ -34,7 +36,7 @@ class LoadBalancer:
         print("\n[Load Balancer] Starting migration loop...")
         lif = self.get_LIF_metrics()
         loop_counter = 0
-        MAX_LOOPS = 1000  # safety guard
+        MAX_LOOPS = 1000
 
         while loop_counter < MAX_LOOPS:
             loop_counter += 1
@@ -63,8 +65,7 @@ class LoadBalancer:
                 if lif[vm.id]["status"] == "overloaded":
                     for i, task in enumerate(vm.waiting_list):
                         if not hasattr(task, 'was_migrated'):
-                            task.was_migrated = False  # initialize if missing
-
+                            task.was_migrated = False
                         if not task.was_migrated:
                             task = vm.waiting_list.pop(i)
                             task.was_migrated = True
@@ -75,6 +76,10 @@ class LoadBalancer:
                                     uvm.waiting_list.append(task)
                                     print(f" → Assigned to underloaded VM-{uvm.id}")
                                     migration_done = True
+
+                                    # Log migration
+                                    if hasattr(task, 'tracker'):
+                                        task.tracker.log_task_migration()
                                     break
                             break
                 if migration_done:

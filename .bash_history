@@ -85,3 +85,32 @@ nano plots.py
 ./run_experiments.sh
 cd ..
 ./run_experiments.sh
+ls
+ls logs
+ls
+git init
+git remote add origin https://github.com/rishabhjohri/Improved-Round-Robin-Algo-Python.git
+git add .
+git commit -m "R"
+git config --global user.email "rishabh2000johri2@gmail.com"
+git config --global user.name "rishabhjohri"
+git commit -m "R"
+nano .gitignore
+git reset HEAD .
+git rm -r --cached .local/
+git add .
+git commit -m "Initial commit with IWRR project files"
+git push origin main
+git push origin master
+rm main.py
+nano main.py
+cd iwrr
+ls
+rm load_balancer.py
+nano load_balancer.py
+cd ..
+ls
+bash run_experiments.sh
+ls
+cd logs
+ls

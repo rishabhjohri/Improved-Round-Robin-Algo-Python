@@ -1,0 +1,13 @@
+# Ignore virtual environments, system paths
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Ignore system-specific user cache
+.local/
+.venv/
+env/
+venv/
+logs/
